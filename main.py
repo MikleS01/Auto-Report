@@ -36,19 +36,15 @@ while True:
 headers = {
     "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_6_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 }
-proxies={
-        "http": "http://npmtxnba-8:u16fw7al6u19@p.webshare.io:80/",
-        "https": "http://npmtxnba-8:u16fw7al6u19@p.webshare.io:80/"
-    } 
-response = requests.get(url, headers = headers,proxies = proxies)
+
+response = requests.get(url, headers = headers)
 response.raise_for_status()
 soup = BeautifulSoup(response.text, features="html.parser")
 
 Headline = soup.find("h1")
 all_tags = soup.find_all(['p', 'h2',"h3",'h4','h5','img'])
 
-# if "<p>" in str(all_tags[0]): 
-#     pprint("test")
+
  
 doc = Document()
 times14()
@@ -89,7 +85,7 @@ for number,tag in enumerate(not_empty_tags):
         head5.alignment = WD_ALIGN_PARAGRAPH.CENTER 
     elif "<img" in str(tag):
         img_src = 'https:' + tag["src"]
-        response = requests.get(img_src,headers = headers, proxies = proxies)
+        response = requests.get(img_src,headers = headers)
         response.raise_for_status()      
         with open(f'WikiPhoto/Photo{number}.png','wb') as file:
            file.write(response.content)
